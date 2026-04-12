@@ -6,7 +6,7 @@ SubTitle = "By: Medr0so_0 | Rip_arthur",
 SaveFolder = "testando | redz lib v5.lua"
 })
 Window:AddMinimizeButton({
-Button = { Image = "rbxassetid://134338218110579", BackgroundTransparency = 0.1 },
+Button = { Image = "rbxassetid://94567592708705", BackgroundTransparency = 0.1 },
 Corner = { CornerRadius = UDim.new(35, 1) },
 })
 -- Bio
@@ -55,6 +55,21 @@ Callback = function()
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
 end
 })
+tab2:AddSlider({
+Title = "JumpPower",
+MinValue = 50,
+MaxValue = 500,
+Callback = function(Value)
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+end
+})
+tab2:AddButton({
+Title = "reset JumpPower",
+Callback = function()
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+end
+})
+
 local InfiniteJumpEnabled = false
 local JumpConnection
 
@@ -110,6 +125,25 @@ if NoclipEnabled then
     end  
 end
 
+})
+tab2:AddButton({
+Title = "Clique teleporte",
+Callback = function()
+local player = game.Players.LocalPlayer
+local mouse = player:GetMouse()
+
+local tool = Instance.new("Tool")
+tool.Name = "TP Tool"
+tool.RequiresHandle = false
+tool.Parent = player.Backpack
+
+tool.Activated:Connect(function()
+local char = player.Character
+if char and char:FindFirstChild("HumanoidRootPart") then
+char.HumanoidRootPart.CFrame = CFrame.new(mouse.Hit.Position + Vector3.new(0, 3, 0))
+end
+end)
+end
 })
 local Tab = Window:MakeTab({"Skin", "rbxassetid://10734952036"})
 
@@ -9861,3 +9895,145 @@ TabFE:AddParagraph({
 "AVISO",
 "as opções dessa aba tomaram patched, então apenas as skins e itens delas são visíveis para os outros jogadores."
 })
+local protec = Window:MakeTab({"Proteção", "shield"})
+protec:AddSection("Proteções")
+
+local protections = {
+    Canoe = false,
+    Jet = false,
+    Heli = false,
+    Ball = false,
+    Sit = false
+}
+
+task.spawn(function()
+    while true do
+
+        local char = LocalPlayer.Character
+        local workspaceCom = Workspace:FindFirstChild("WorkspaceCom")
+
+        if workspaceCom then
+
+            -- Anti Canoe Fling
+            if protections.Canoe then
+                local canoeFolder = workspaceCom:FindFirstChild("001_CanoeStorage")
+                if canoeFolder then
+                    for _, canoe in ipairs(canoeFolder:GetChildren()) do
+                        local owner = canoe:FindFirstChild("Owner")
+                        if not owner or owner.Value ~= LocalPlayer then
+                            canoe:Destroy()
+                        end
+                    end
+                end
+            end
+
+            -- Anti Jet Fling
+            if protections.Jet then
+                local airport = workspaceCom:FindFirstChild("001_Airport")
+                if airport then
+                    local hanger = airport:FindFirstChild("AirportHanger")
+                    if hanger then
+                        local jetStorage = hanger:FindFirstChild("001_JetStorage")
+                        if jetStorage then
+                            local jetFolder = jetStorage:FindFirstChild("JetAirport")
+                            if jetFolder then
+                                for _, jet in ipairs(jetFolder:GetChildren()) do
+                                    if jet.Name ~= LocalPlayer.Name then
+                                        jet:Destroy()
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+
+            -- Anti Helicopter Fling
+            if protections.Heli then
+                local heliStorage = workspaceCom:FindFirstChild("001_HeliStorage")
+                if heliStorage then
+                    local heliFolder = heliStorage:FindFirstChild("PoliceStationHeli")
+                    if heliFolder then
+                        for _, heli in ipairs(heliFolder:GetChildren()) do
+                            if heli.Name ~= LocalPlayer.Name then
+                                heli:Destroy()
+                            end
+                        end
+                    end
+                end
+            end
+
+            -- Anti Ball Fling
+            if protections.Ball then
+                local ballFolder = workspaceCom:FindFirstChild("001_SoccerBalls")
+                if ballFolder then
+                    for _, ball in ipairs(ballFolder:GetChildren()) do
+                        ball:Destroy()
+                    end
+                end
+            end
+
+        end
+
+        -- Anti Sit
+        if protections.Sit and char then
+            local humanoid = char:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
+
+                if humanoid:GetState() == Enum.HumanoidStateType.Seated then
+                    humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+                end
+            end
+        end
+
+        task.wait(0.2)
+
+    end
+end)
+
+-- Toggles
+
+protec:AddToggle({
+    Name = "Anti Canoe Fling",
+    Default = false,
+    Callback = function(value)
+        protections.Canoe = value
+    end
+})
+
+protec:AddToggle({
+    Name = "Anti Jet Fling",
+    Default = false,
+    Callback = function(value)
+        protections.Jet = value
+    end
+})
+
+protec:AddToggle({
+    Name = "Anti Helicopter Fling",
+    Default = false,
+    Callback = function(value)
+        protections.Heli = value
+    end
+})
+
+protec:AddToggle({
+    Name = "Anti Ball Fling",
+    Default = false,
+    Callback = function(value)
+        protections.Ball = value
+    end
+})
+
+protec:AddToggle({
+    Name = "Anti Sit",
+    Default = false,
+    Callback = function(value)
+        protections.Sit = value
+    end
+})
+protec:AddParagraph({"Atenção:", "essa aba não foi feita por mim, peguei de uma source vazada para economizar tempo 👍😅"})
+protec:AddParagraph({"usei a source vazada do Bazuka para fazer essa aba."})
+
+
