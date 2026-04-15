@@ -21,7 +21,14 @@ local args = {
 
 game:GetService("ReplicatedStorage").RE:FindFirstChild("1RPNam1eTex1t"):FireServer(unpack(args))
 local tab1 = Window:MakeTab({"Informações", "info"})
-
+tab1:AddSection("Discord do grupo")
+tab1:AddDiscordInvite({
+Name = "Hiro Team",
+Description = "Entrar",
+Logo = "rbxassetid://95559343313023",
+Invite = "https://discord.gg/3YNBcQGnCh",
+Color = Color3.fromRGB(20, 40, 120)
+})
 tab1:AddSection("criadores")
 tab1:AddParagraph({
 Title = "programador: Medr0so_0",
@@ -4455,6 +4462,12 @@ tabscripts:AddButton({
 Title = "Fly Gui By Medr0so_0",
 Callback = function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/nombrehumilde-cyber/HironDrigon/refs/heads/main/fly"))()
+end
+})
+tabscripts:AddButton({
+Title = "HironDrigon",
+Callback = function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-HironDrigon-v2-111282"))()
 end
 })
 
@@ -10036,4 +10049,10 @@ protec:AddToggle({
 protec:AddParagraph({"Atenção:", "essa aba não foi feita por mim, peguei de uma source vazada para economizar tempo 👍😅"})
 protec:AddParagraph({"usei a source vazada do Bazuka para fazer essa aba."})
 
-
+discord:AddDiscordInvite({
+Name = "Hiro Team",
+Description = "Entrar",
+Logo = "rbxassetid://95559343313023",
+Invite = "https://discord.gg/3YNBcQGnCh",
+Color = Color3.fromRGB(20, 40, 120)
+})
