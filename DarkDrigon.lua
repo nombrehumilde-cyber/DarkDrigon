@@ -152,6 +152,135 @@ end
 end)
 end
 })
+tab2:AddToggle({
+Title = "esp vermelho",
+Default = false,
+Callback = function(Value)
+getgenv().RedESP = Value
+
+if Value then
+task.spawn(function()
+while getgenv().RedESP do
+for _,v in pairs(game.Players:GetPlayers()) do
+if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("RED_ESP") then
+
+local hl = Instance.new("Highlight")
+hl.Name = "RED_ESP"
+hl.FillTransparency = 1
+hl.OutlineColor = Color3.fromRGB(255,0,0)
+hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+hl.Parent = v.Character
+
+local gui = Instance.new("BillboardGui")
+gui.Name = "RED_ESP"
+gui.Size = UDim2.new(0,200,0,50)
+gui.AlwaysOnTop = true
+gui.StudsOffset = Vector3.new(0,3,0)
+gui.Parent = v.Character.Head
+
+local txt = Instance.new("TextLabel")
+txt.Size = UDim2.new(1,0,1,0)
+txt.BackgroundTransparency = 1
+txt.TextColor3 = Color3.fromRGB(255,0,0)
+txt.TextStrokeTransparency = 0
+txt.TextScaled = true
+txt.Parent = gui
+
+task.spawn(function()
+while gui.Parent and getgenv().RedESP do
+local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")
+if lp and hrp then
+txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"
+end
+task.wait()
+end
+end)
+
+end
+end
+task.wait(1)
+end
+end)
+else
+for _,v in pairs(game.Players:GetPlayers()) do
+if v.Character then
+if v.Character:FindFirstChild("RED_ESP") then
+v.Character.RED_ESP:Destroy()
+end
+if v.Character:FindFirstChild("Head") and v.Character.Head:FindFirstChild("RED_ESP") then
+v.Character.Head.RED_ESP:Destroy()
+end
+end
+end
+end
+end
+})
+
+tab2:AddToggle({
+Title = "esp verde",
+Default = false,
+Callback = function(Value)
+getgenv().GreenESP = Value
+
+if Value then
+task.spawn(function()
+while getgenv().GreenESP do
+for _,v in pairs(game.Players:GetPlayers()) do
+if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("GREEN_ESP") then
+
+local hl = Instance.new("Highlight")
+hl.Name = "GREEN_ESP"
+hl.FillTransparency = 1
+hl.OutlineColor = Color3.fromRGB(0,255,0)
+hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+hl.Parent = v.Character
+
+local gui = Instance.new("BillboardGui")
+gui.Name = "GREEN_ESP"
+gui.Size = UDim2.new(0,200,0,50)
+gui.AlwaysOnTop = true
+gui.StudsOffset = Vector3.new(0,3,0)
+gui.Parent = v.Character.Head
+
+local txt = Instance.new("TextLabel")
+txt.Size = UDim2.new(1,0,1,0)
+txt.BackgroundTransparency = 1
+txt.TextColor3 = Color3.fromRGB(0,255,0)
+txt.TextStrokeTransparency = 0
+txt.TextScaled = true
+txt.Parent = gui
+
+task.spawn(function()
+while gui.Parent and getgenv().GreenESP do
+local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")
+if lp and hrp then
+txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"
+end
+task.wait()
+end
+end)
+
+end
+end
+task.wait(1)
+end
+end)
+else
+for _,v in pairs(game.Players:GetPlayers()) do
+if v.Character then
+if v.Character:FindFirstChild("GREEN_ESP") then
+v.Character.GREEN_ESP:Destroy()
+end
+if v.Character:FindFirstChild("Head") and v.Character.Head:FindFirstChild("GREEN_ESP") then
+v.Character.Head.GREEN_ESP:Destroy()
+end
+end
+end
+end
+end
+})
 local Tab = Window:MakeTab({"Skin", "rbxassetid://10734952036"})
 
 -- ========================================================================
