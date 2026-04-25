@@ -9,6 +9,22 @@ Window:AddMinimizeButton({
 Button = { Image = "rbxassetid://94567592708705", BackgroundTransparency = 0.1 },
 Corner = { CornerRadius = UDim.new(35, 1) },
 })
+local Dialog = Window:Dialog({
+
+    Title = "",
+
+    Text = "Opa! você deu play no DarkDrigon, aproveite!",
+
+    Options = {
+
+      {"Jogar", function()
+        
+
+      end}
+
+    }
+
+  })
 -- Bio
 game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(table.unpack({
     [1] = "RolePlayBio",
@@ -38,7 +54,11 @@ Title = "ajudante: Arthurfelipe_blox2",
 })
 tab1:AddSection("Versão")
 tab1:AddParagraph({
-Title = "1.1",
+Title = "1.3",
+})
+tab1:AddParagraph({
+"Atualizações:",
+"Mais opções na aba Teleporte, aviso ao executar o menu."
 })
 tab1:AddSection("AVISO")
 tab1:AddParagraph({
@@ -1831,7 +1851,7 @@ end
 
 -- Toggle final sem deletar sofá
 Troll:AddToggle({
-        Name = "FLING FATAL💀",
+        Name = "FLING SOFÁ V2",
         Default = false,
         Callback = function(ativo)
                 flingAtivo = ativo
@@ -4571,6 +4591,66 @@ Callback = function(value)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-272.5, 3.4, 212.1)
 end
 })
+tabtp:AddButton({
+    Name = "Teleportar para hospital",
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-303.7, 3.4, -2.7)
+    end
+})
+tabtp:AddButton({
+Title = "Teleportar para ilha deserta",
+Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-32.6, 3.3, 2215.1)
+end
+})
+tabtp:AddButton({
+Title = "Teleportar para área de eventos",
+Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(101.7, 5.3, -99.8)
+end
+})
+tabtp:AddButton({
+Title = "Teleportar para ilha deserta 2",
+Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1925.5, 23.3, 328.1)
+end
+})
+tabtp:AddButton({
+Title = "Teleportar para montanha",
+Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-665.1, 252.1, 758.7)
+end
+})
+tabtp:AddButton({
+Title = "Teleportar para torre do aeroporto",
+Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(324.2, 81.0, 102.4)
+end
+})
+tabtp:AddButton({
+Title = "Teleportar para casa da praia",
+Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-180.2, 3.0, 1062.8)
+end
+})
+tabtp:AddButton({
+Title = "Teleportar para esconderijo da usina",
+SubTitle = "para usar essa função a usina precisa estar spawnada, caso contrário você ira cair no void.",
+Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new( 646.1, -136.8, 502.7)
+end
+})
+tabtp:AddParagraph({
+"Atenção",
+"para usar a função 'Teleportar para esconderijo da usina' a usina precisa estar spawnada, caso contrário você ira cair no void"
+})
+tabtp:AddButton({
+Title = "Teleportar para usina",
+Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new( 499.8, 3.0, 402.0)
+end
+})
+
 
 local tabscripts = Window:MakeTab({"Scripts", "Paper"})
 tabscripts:AddSection("scripts para brookhaven")
