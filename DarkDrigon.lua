@@ -52,9 +52,15 @@ Title = "programador: Medr0so_0",
 tab1:AddParagraph({
 Title = "ajudante: Arthurfelipe_blox2",
 })
+tab1:AddButton({
+Title = "TikTok do medr0so_0",
+Callback = function()
+setclipboard("https://www.tiktok.com/@medr0so_0?_r=1&_t=ZS-95pg51NJeYz")
+end
+})
 tab1:AddSection("Versão")
 tab1:AddParagraph({
-Title = "1.3",
+Title = "1.4",
 })
 tab1:AddParagraph({
 "Atualizações:",
@@ -172,134 +178,132 @@ end
 end)
 end
 })
-tab2:AddToggle({
-Title = "esp vermelho",
-Default = false,
-Callback = function(Value)
-getgenv().RedESP = Value
+tab2:AddDropdown({
+    Title = "ESP Jogadores",
+    Options = {
+        "Desativar",
+        "ESP Vermelho",
+        "ESP Verde"
+    },
+    Callback = function(Value)
 
-if Value then
-task.spawn(function()
-while getgenv().RedESP do
-for _,v in pairs(game.Players:GetPlayers()) do
-if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("RED_ESP") then
+        getgenv().RedESP = false
+        getgenv().GreenESP = false
 
-local hl = Instance.new("Highlight")
-hl.Name = "RED_ESP"
-hl.FillTransparency = 1
-hl.OutlineColor = Color3.fromRGB(255,0,0)
-hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-hl.Parent = v.Character
+        for _,v in pairs(game.Players:GetPlayers()) do
+            if v.Character then
+                if v.Character:FindFirstChild("RED_ESP") then
+                    v.Character.RED_ESP:Destroy()
+                end
+                if v.Character:FindFirstChild("GREEN_ESP") then
+                    v.Character.GREEN_ESP:Destroy()
+                end
+                if v.Character:FindFirstChild("Head") then
+                    if v.Character.Head:FindFirstChild("RED_ESP") then
+                        v.Character.Head.RED_ESP:Destroy()
+                    end
+                    if v.Character.Head:FindFirstChild("GREEN_ESP") then
+                        v.Character.Head.GREEN_ESP:Destroy()
+                    end
+                end
+            end
+        end
 
-local gui = Instance.new("BillboardGui")
-gui.Name = "RED_ESP"
-gui.Size = UDim2.new(0,200,0,50)
-gui.AlwaysOnTop = true
-gui.StudsOffset = Vector3.new(0,3,0)
-gui.Parent = v.Character.Head
+        if Value == "ESP Vermelho" then
+            getgenv().RedESP = true
 
-local txt = Instance.new("TextLabel")
-txt.Size = UDim2.new(1,0,1,0)
-txt.BackgroundTransparency = 1
-txt.TextColor3 = Color3.fromRGB(255,0,0)
-txt.TextStrokeTransparency = 0
-txt.TextScaled = true
-txt.Parent = gui
+            task.spawn(function()
+                while getgenv().RedESP do
+                    for _,v in pairs(game.Players:GetPlayers()) do
+                        if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("RED_ESP") then
 
-task.spawn(function()
-while gui.Parent and getgenv().RedESP do
-local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")
-if lp and hrp then
-txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"
-end
-task.wait()
-end
-end)
+                            local hl = Instance.new("Highlight")
+                            hl.Name = "RED_ESP"
+                            hl.FillTransparency = 1
+                            hl.OutlineColor = Color3.fromRGB(255,0,0)
+                            hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+                            hl.Parent = v.Character
 
-end
-end
-task.wait(1)
-end
-end)
-else
-for _,v in pairs(game.Players:GetPlayers()) do
-if v.Character then
-if v.Character:FindFirstChild("RED_ESP") then
-v.Character.RED_ESP:Destroy()
-end
-if v.Character:FindFirstChild("Head") and v.Character.Head:FindFirstChild("RED_ESP") then
-v.Character.Head.RED_ESP:Destroy()
-end
-end
-end
-end
-end
-})
+                            local gui = Instance.new("BillboardGui")
+                            gui.Name = "RED_ESP"
+                            gui.Size = UDim2.new(0,200,0,50)
+                            gui.AlwaysOnTop = true
+                            gui.StudsOffset = Vector3.new(0,3,0)
+                            gui.Parent = v.Character.Head
 
-tab2:AddToggle({
-Title = "esp verde",
-Default = false,
-Callback = function(Value)
-getgenv().GreenESP = Value
+                            local txt = Instance.new("TextLabel")
+                            txt.Size = UDim2.new(1,0,1,0)
+                            txt.BackgroundTransparency = 1
+                            txt.TextColor3 = Color3.fromRGB(255,0,0)
+                            txt.TextStrokeTransparency = 0
+                            txt.TextScaled = true
+                            txt.Parent = gui
 
-if Value then
-task.spawn(function()
-while getgenv().GreenESP do
-for _,v in pairs(game.Players:GetPlayers()) do
-if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("GREEN_ESP") then
+                            task.spawn(function()
+                                while gui.Parent and getgenv().RedESP do
+                                    local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                                    local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")
 
-local hl = Instance.new("Highlight")
-hl.Name = "GREEN_ESP"
-hl.FillTransparency = 1
-hl.OutlineColor = Color3.fromRGB(0,255,0)
-hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-hl.Parent = v.Character
+                                    if lp and hrp then
+                                        txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"
+                                    end
+                                    task.wait()
+                                end
+                            end)
+                        end
+                    end
+                    task.wait(1)
+                end
+            end)
 
-local gui = Instance.new("BillboardGui")
-gui.Name = "GREEN_ESP"
-gui.Size = UDim2.new(0,200,0,50)
-gui.AlwaysOnTop = true
-gui.StudsOffset = Vector3.new(0,3,0)
-gui.Parent = v.Character.Head
+        elseif Value == "ESP Verde" then
+            getgenv().GreenESP = true
 
-local txt = Instance.new("TextLabel")
-txt.Size = UDim2.new(1,0,1,0)
-txt.BackgroundTransparency = 1
-txt.TextColor3 = Color3.fromRGB(0,255,0)
-txt.TextStrokeTransparency = 0
-txt.TextScaled = true
-txt.Parent = gui
+            task.spawn(function()
+                while getgenv().GreenESP do
+                    for _,v in pairs(game.Players:GetPlayers()) do
+                        if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("GREEN_ESP") then
 
-task.spawn(function()
-while gui.Parent and getgenv().GreenESP do
-local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")
-if lp and hrp then
-txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"
-end
-task.wait()
-end
-end)
+                            local hl = Instance.new("Highlight")
+                            hl.Name = "GREEN_ESP"
+                            hl.FillTransparency = 1
+                            hl.OutlineColor = Color3.fromRGB(0,255,0)
+                            hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+                            hl.Parent = v.Character
 
-end
-end
-task.wait(1)
-end
-end)
-else
-for _,v in pairs(game.Players:GetPlayers()) do
-if v.Character then
-if v.Character:FindFirstChild("GREEN_ESP") then
-v.Character.GREEN_ESP:Destroy()
-end
-if v.Character:FindFirstChild("Head") and v.Character.Head:FindFirstChild("GREEN_ESP") then
-v.Character.Head.GREEN_ESP:Destroy()
-end
-end
-end
-end
-end
+                            local gui = Instance.new("BillboardGui")
+                            gui.Name = "GREEN_ESP"
+                            gui.Size = UDim2.new(0,200,0,50)
+                            gui.AlwaysOnTop = true
+                            gui.StudsOffset = Vector3.new(0,3,0)
+                            gui.Parent = v.Character.Head
+
+                            local txt = Instance.new("TextLabel")
+                            txt.Size = UDim2.new(1,0,1,0)
+                            txt.BackgroundTransparency = 1
+                            txt.TextColor3 = Color3.fromRGB(0,255,0)
+                            txt.TextStrokeTransparency = 0
+                            txt.TextScaled = true
+                            txt.Parent = gui
+
+                            task.spawn(function()
+                                while gui.Parent and getgenv().GreenESP do
+                                    local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                                    local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")
+
+                                    if lp and hrp then
+                                        txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"
+                                    end
+                                    task.wait()
+                                end
+                            end)
+                        end
+                    end
+                    task.wait(1)
+                end
+            end)
+        end
+    end
 })
 local Tab = Window:MakeTab({"Skin", "rbxassetid://10734952036"})
 
@@ -4573,82 +4577,67 @@ TabNuke:AddToggle({
 
 local tabtp = Window:MakeTab({"Teleporte", "Map"})
 tabtp:AddSection("teleportes")
-tabtp:AddButton({
-Title = "Teleportar para praça",
-Callback = function(value)
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-27, 1, -3)
-end
-})
-tabtp:AddButton({
-Title = "Teleportar para banco",
-Callback = function(value)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2.7, 3.5, 249.8)
-end
-})
-tabtp:AddButton({
-Title = "Teleportar para escola",
-Callback = function(value)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-272.5, 3.4, 212.1)
-end
-})
-tabtp:AddButton({
-    Name = "Teleportar para hospital",
-    Callback = function()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-303.7, 3.4, -2.7)
+tabtp:AddDropdown({
+    Title = "Teleports",
+    Options = {
+        "Praça",
+        "Banco",
+        "Escola",
+        "Hospital",
+        "Ilha Deserta",
+        "Área de Eventos",
+        "Ilha Deserta 2",
+        "Montanha",
+        "Torre do Aeroporto",
+        "Casa da Praia",
+        "Esconderijo da Usina",
+        "Usina"
+    },
+    Callback = function(Value)
+
+        if Value == "Praça" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-27, 1, -3)
+
+        elseif Value == "Banco" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2.7, 3.5, 249.8)
+
+        elseif Value == "Escola" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-272.5, 3.4, 212.1)
+
+        elseif Value == "Hospital" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-303.7, 3.4, -2.7)
+
+        elseif Value == "Ilha Deserta" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-32.6, 3.3, 2215.1)
+
+        elseif Value == "Área de Eventos" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(101.7, 5.3, -99.8)
+
+        elseif Value == "Ilha Deserta 2" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1925.5, 23.3, 328.1)
+
+        elseif Value == "Montanha" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-665.1, 252.1, 758.7)
+
+        elseif Value == "Torre do Aeroporto" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(324.2, 81.0, 102.4)
+
+        elseif Value == "Casa da Praia" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-180.2, 3.0, 1062.8)
+
+        elseif Value == "Esconderijo da Usina" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(646.1, -136.8, 502.7)
+
+        elseif Value == "Usina" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(499.8, 3.0, 402.0)
+        end
+
     end
 })
-tabtp:AddButton({
-Title = "Teleportar para ilha deserta",
-Callback = function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-32.6, 3.3, 2215.1)
-end
-})
-tabtp:AddButton({
-Title = "Teleportar para área de eventos",
-Callback = function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(101.7, 5.3, -99.8)
-end
-})
-tabtp:AddButton({
-Title = "Teleportar para ilha deserta 2",
-Callback = function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1925.5, 23.3, 328.1)
-end
-})
-tabtp:AddButton({
-Title = "Teleportar para montanha",
-Callback = function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-665.1, 252.1, 758.7)
-end
-})
-tabtp:AddButton({
-Title = "Teleportar para torre do aeroporto",
-Callback = function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(324.2, 81.0, 102.4)
-end
-})
-tabtp:AddButton({
-Title = "Teleportar para casa da praia",
-Callback = function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-180.2, 3.0, 1062.8)
-end
-})
-tabtp:AddButton({
-Title = "Teleportar para esconderijo da usina",
-SubTitle = "para usar essa função a usina precisa estar spawnada, caso contrário você ira cair no void.",
-Callback = function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new( 646.1, -136.8, 502.7)
-end
-})
+
 tabtp:AddParagraph({
-"Atenção",
-"para usar a função 'Teleportar para esconderijo da usina' a usina precisa estar spawnada, caso contrário você ira cair no void"
-})
-tabtp:AddButton({
-Title = "Teleportar para usina",
-Callback = function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new( 499.8, 3.0, 402.0)
-end
+    "Atenção",
+    "Para usar 'Esconderijo da Usina', a usina precisa estar spawnada, senão você vai pro void."
 })
 
 
