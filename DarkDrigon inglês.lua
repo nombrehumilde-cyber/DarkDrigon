@@ -17,7 +17,7 @@ local Dialog = Window:Dialog({
 
     Options = {
 
-      {"Jogar", function()
+      {"Play", function()
         
 
       end}
@@ -50,12 +50,18 @@ tab1:AddParagraph({
 Title = "programmer: Medr0so_0",
 })
 tab1:AddParagraph({
-Title = "helper: Arthurfelipe_blox2",
+Title = "co-developer: Arthurfelipe_blox2",
 })
 tab1:AddButton({
-Title = "tiktok do medr0so_0",
+Title = "official tiktok of medr0so_0",
 Callback = function()
 setclipboard("https://www.tiktok.com/@medr0so_0?_r=1&_t=ZS-95pg51NJeYz")
+end
+})
+tab1:AddButton({
+Title = "secondary account of medr0so_0 on tiktok",
+Callback = function()
+setclipboard("https://www.tiktok.com/@medr0so_0.oficial.2?_r=1&_t=ZS-969U9qQ98vB")
 end
 })
 tab1:AddSection("version")
@@ -68,7 +74,7 @@ tab1:AddParagraph({
 })
 tab1:AddSection("NOTICE")
 tab1:AddParagraph({
-"Aviso do medr0so_0:",
+"warning from medr0so_0:",
 "This script was programmed by only ONE person (medr0so_0), and Arthurfelipe_blox2 (name changed to Davishe98) only gives me ideas, so please be patient with updates. "
 })
 local tab2 = Window:MakeTab({"Basics", "user"})
@@ -159,6 +165,7 @@ if NoclipEnabled then
 end
 
 })
+
 tab2:AddButton({
 Title = "click Teleport",
 Callback = function()
@@ -571,8 +578,8 @@ Tab:AddButton({
 Tab:AddSection({"Mini Body Presets"})
 
 Tab:AddParagraph({
-    Title = "Notice:",
-    Content = "These buttons change the BODY PARTS of your avatar. It will reset what you're using now, use carefully."
+    "Notice:",
+    "These buttons change the BODY PARTS of your avatar. It will reset what you're using now, use carefully."
 })
 
 local function ApplyBodyPreset(ids)
@@ -606,7 +613,7 @@ Tab:AddButton({Name = "Possessed-Horror", Callback = function()
 end})
 
 Tab:AddParagraph({
-    Title = "Mais vindo na próxima",
+    Title = "More will come during updates. ",
     Content = "Vai ter RGB de corpo, invis total, mais presets do caralho. Aguenta aí que o Zé Pequeno tá cozinhando!"
 })
 
@@ -621,7 +628,7 @@ local SectionRGBName = Tab:AddSection({
 
 Tab:AddToggle({
     Name = "NAME RGB",
-    Description = "Ativar NICK RGB",
+    Description = " NICK RGB",
     Default = false,
     Callback = function(value)
         isNameActive = value
@@ -636,7 +643,7 @@ local SectionRGBBio = Tab:AddSection({
 
 Tab:AddToggle({
     Name = "RGB BIO",
-    Description = "Ativar RGB BIO",
+    Description = "activate RGB BIO",
     Default = false,
     Callback = function(value)
         isBioActive = value
@@ -686,7 +693,7 @@ spawn(function()
 end)
 
 local SectionNames = Tab:AddSection({
-    Name = "Adicionar CHAOSs no Jogador"
+    Name = "Add names to the player. "
 })
 
 local names = {
@@ -703,7 +710,8 @@ local names = {
     {"INC0MUN", " INC0MUN"},
     {"BAD BOY", " BAD BOY "},
     {"HACK3R", "HACK3R "},
-    {"FUGITIVO DO CAPS", "FUGITIVO DO CAPS "}
+    {"FUGITIVO DO CAPS", "FUGITIVO DO CAPS "},
+    {"《ADMINISTRADOR》", "《ADMINISTRADOR》"}
 }
 
 for _, name in ipairs(names) do
@@ -1246,7 +1254,7 @@ end
         end
     })
 
-    local MethodSection = Troll:AddSection({ Name = "MÉTODOS" })
+    local MethodSection = Troll:AddSection({ Name = "METHODS" })
 
     Troll:AddDropdown({
         Name = "SELECT 1 METHOD",
@@ -4591,7 +4599,8 @@ tabtp:AddDropdown({
         "Airport Tower",
         "Beach house",
         "Power plant hideout",
-        "plant"
+        "plant",
+        "hill"
     },
     Callback = function(Value)
 
@@ -4630,6 +4639,9 @@ tabtp:AddDropdown({
 
         elseif Value == "plant" then
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(499.8, 3.0, 402.0)
+            
+            elseif Value == "hill" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-345.3, 66.0, -452.0)
         end
 
     end
@@ -8309,14 +8321,14 @@ end
 
 -- Parágrafo
 CarTab:AddParagraph({
-    Title = "use o void protection",
+    Title = "use the void protection ",
     Content = ""
 })
 
 -- Toggle para matar todos os carros
 CarTab:AddToggle({
-    Name = "Matar todos os carros do server",
-    Description = "Teleporta os carros para o void",
+    Name = "Kill all the cars on the server. ",
+    Description = "teleports all cars to the void ",
     Default = false,
     Callback = function(state)
         local originalPosition
@@ -8373,12 +8385,12 @@ CarTab:AddToggle({
     end
 })
 
-local Section = CarTab:AddSection({"functions dos carro"})
+local Section = CarTab:AddSection({"car functions "})
 
 -- Criar o dropdown
 local Dropdown = CarTab:AddDropdown({
-    Name = "Selecionar Carro do Jogador",
-    Description = "Selecione o carro de um jogador",
+    Name = "select player's car ",
+    Description = "select a player's car ",
     Default = nil,
     Options = TeleportCarro:AtualizarListaCarros(),
     Callback = function(carroSelecionado)
@@ -8388,8 +8400,8 @@ local Dropdown = CarTab:AddDropdown({
 
 -- Toggle para ver a câmera do carro selecionado
 CarTab:AddToggle({
-    Name = "Ver Câmera do Carro Selecionado",
-    Description = "Foca a câmera no carro selecionado",
+    Name = "view camera of the selected car ",
+    Description = "Focus the camera on the selected car. ",
     Default = false,
     Callback = function(state)
         if state then
@@ -8445,12 +8457,12 @@ TeleportCarro.Workspace:WaitForChild("Vehicles").ChildRemoved:Connect(function()
     Dropdown:Set(TeleportCarro:AtualizarListaCarros())
 end)
 
-local Section = CarTab:AddSection({"functions kill e trazer"})
+local Section = CarTab:AddSection({"kill and bring functions "})
 
 -- Botão para destruir carro selecionado
 CarTab:AddButton({
-    Name = "Destruir Carro Selecionado",
-    Description = "Teleporta o carro selecionado para o void",
+    Name = "Destroy selected car ",
+    Description = "Teleports the selected car to the void. ",
     Callback = function()
         if not _G.SelectedVehicle or _G.SelectedVehicle == "" then
             TeleportCarro:MostrarNotificacao("Nenhum carro selecionado!")
@@ -8503,8 +8515,8 @@ CarTab:AddButton({
 
 -- Botão para trazer carro selecionado
 CarTab:AddButton({
-    Name = "Trazer Carro Selecionado",
-    Description = "Teleporta o carro selecionado para sua posição",
+    Name = "bring selected car ",
+    Description = "Teleports the selected car to your location. ",
     Callback = function()
         if not _G.SelectedVehicle or _G.SelectedVehicle == "" then
             TeleportCarro:MostrarNotificacao("Nenhum carro selecionado!")
@@ -8557,8 +8569,8 @@ CarTab:AddButton({
 
 -- Botão para trazer todos os carros
 CarTab:AddButton({
-    Name = "Trazer Todos os Carros",
-    Description = "Teleporta todos os carros do servidor para sua posição",
+    Name = "bring all the cars ",
+    Description = "Teleports all cars from the server to your location. ",
     Callback = function()
         local originalPos
         if TeleportCarro.LocalPlayer.Character and TeleportCarro.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
@@ -9647,11 +9659,3 @@ protec:AddToggle({
 })
 protec:AddParagraph({"attention:", "This tab wasn't created by me; I took it from a leaked source to save time 👍😅"})
 protec:AddParagraph({"I used the leaked Bazuka source code to create this tab."})
-
-discord:AddDiscordInvite({
-Name = "Hiro Team",
-Description = "Entrar",
-Logo = "rbxassetid://95559343313023",
-Invite = "https://discord.gg/3YNBcQGnCh",
-Color = Color3.fromRGB(20, 40, 120)
-})
