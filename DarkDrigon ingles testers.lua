@@ -17,7 +17,7 @@ local Dialog = Window:Dialog({
 
     Options = {
 
-      {"Jogar", function()
+      {"Play", function()
         
 
       end}
@@ -74,7 +74,7 @@ tab1:AddParagraph({
 })
 tab1:AddSection("NOTICE")
 tab1:AddParagraph({
-"Aviso do medr0so_0:",
+"warning from medr0so_0:",
 "This script was programmed by only ONE person (medr0so_0), and Arthurfelipe_blox2 (name changed to Davishe98) only gives me ideas, so please be patient with updates. "
 })
 local tab2 = Window:MakeTab({"Basics", "user"})
@@ -8401,7 +8401,7 @@ local Dropdown = CarTab:AddDropdown({
 -- Toggle para ver a câmera do carro selecionado
 CarTab:AddToggle({
     Name = "view camera of the selected car ",
-    Description = "Foca a câmera no carro selecionado",
+    Description = "Focus the camera on the selected car. ",
     Default = false,
     Callback = function(state)
         if state then
@@ -8462,7 +8462,7 @@ local Section = CarTab:AddSection({"kill and bring functions "})
 -- Botão para destruir carro selecionado
 CarTab:AddButton({
     Name = "Destroy selected car ",
-    Description = "Teleporta o carro selecionado para o void",
+    Description = "Teleports the selected car to the void. ",
     Callback = function()
         if not _G.SelectedVehicle or _G.SelectedVehicle == "" then
             TeleportCarro:MostrarNotificacao("Nenhum carro selecionado!")
@@ -8516,7 +8516,7 @@ CarTab:AddButton({
 -- Botão para trazer carro selecionado
 CarTab:AddButton({
     Name = "bring selected car ",
-    Description = "Teleporta o carro selecionado para sua posição",
+    Description = "Teleports the selected car to your location. ",
     Callback = function()
         if not _G.SelectedVehicle or _G.SelectedVehicle == "" then
             TeleportCarro:MostrarNotificacao("Nenhum carro selecionado!")
