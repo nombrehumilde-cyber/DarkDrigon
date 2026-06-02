@@ -185,133 +185,346 @@ end
 end)
 end
 })
+
+tab2:AddSection("Esp")
+
+getgenv().SelectedESP = nil
+getgenv().ESPEnabled = false
+getgenv().ESPMode = "ESP Full"
+
 tab2:AddDropdown({
-    Title = "ESP Players",
-    Options = {
-        "Disable",
-        "ESP Red",
-        "ESP Green"
-    },
-    Callback = function(Value)
-
-        getgenv().RedESP = false
-        getgenv().GreenESP = false
-
-        for _,v in pairs(game.Players:GetPlayers()) do
-            if v.Character then
-                if v.Character:FindFirstChild("RED_ESP") then
-                    v.Character.RED_ESP:Destroy()
-                end
-                if v.Character:FindFirstChild("GREEN_ESP") then
-                    v.Character.GREEN_ESP:Destroy()
-                end
-                if v.Character:FindFirstChild("Head") then
-                    if v.Character.Head:FindFirstChild("RED_ESP") then
-                        v.Character.Head.RED_ESP:Destroy()
-                    end
-                    if v.Character.Head:FindFirstChild("GREEN_ESP") then
-                        v.Character.Head.GREEN_ESP:Destroy()
-                    end
-                end
-            end
-        end
-
-        if Value == "ESP Red" then
-            getgenv().RedESP = true
-
-            task.spawn(function()
-                while getgenv().RedESP do
-                    for _,v in pairs(game.Players:GetPlayers()) do
-                        if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("RED_ESP") then
-
-                            local hl = Instance.new("Highlight")
-                            hl.Name = "RED_ESP"
-                            hl.FillTransparency = 1
-                            hl.OutlineColor = Color3.fromRGB(255,0,0)
-                            hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-                            hl.Parent = v.Character
-
-                            local gui = Instance.new("BillboardGui")
-                            gui.Name = "RED_ESP"
-                            gui.Size = UDim2.new(0,200,0,50)
-                            gui.AlwaysOnTop = true
-                            gui.StudsOffset = Vector3.new(0,3,0)
-                            gui.Parent = v.Character.Head
-
-                            local txt = Instance.new("TextLabel")
-                            txt.Size = UDim2.new(1,0,1,0)
-                            txt.BackgroundTransparency = 1
-                            txt.TextColor3 = Color3.fromRGB(255,0,0)
-                            txt.TextStrokeTransparency = 0
-                            txt.TextScaled = true
-                            txt.Parent = gui
-
-                            task.spawn(function()
-                                while gui.Parent and getgenv().RedESP do
-                                    local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-                                    local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")
-
-                                    if lp and hrp then
-                                        txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"
-                                    end
-                                    task.wait()
-                                end
-                            end)
-                        end
-                    end
-                    task.wait(1)
-                end
-            end)
-
-        elseif Value == "ESP Green" then
-            getgenv().GreenESP = true
-
-            task.spawn(function()
-                while getgenv().GreenESP do
-                    for _,v in pairs(game.Players:GetPlayers()) do
-                        if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("GREEN_ESP") then
-
-                            local hl = Instance.new("Highlight")
-                            hl.Name = "GREEN_ESP"
-                            hl.FillTransparency = 1
-                            hl.OutlineColor = Color3.fromRGB(0,255,0)
-                            hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-                            hl.Parent = v.Character
-
-                            local gui = Instance.new("BillboardGui")
-                            gui.Name = "GREEN_ESP"
-                            gui.Size = UDim2.new(0,200,0,50)
-                            gui.AlwaysOnTop = true
-                            gui.StudsOffset = Vector3.new(0,3,0)
-                            gui.Parent = v.Character.Head
-
-                            local txt = Instance.new("TextLabel")
-                            txt.Size = UDim2.new(1,0,1,0)
-                            txt.BackgroundTransparency = 1
-                            txt.TextColor3 = Color3.fromRGB(0,255,0)
-                            txt.TextStrokeTransparency = 0
-                            txt.TextScaled = true
-                            txt.Parent = gui
-
-                            task.spawn(function()
-                                while gui.Parent and getgenv().GreenESP do
-                                    local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-                                    local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")
-
-                                    if lp and hrp then
-                                        txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"
-                                    end
-                                    task.wait()
-                                end
-                            end)
-                        end
-                    end
-                    task.wait(1)
-                end
-            end)
-        end
-    end
+Title = "ESP Players",
+Options = {
+"ESP Red",
+"ESP Green",
+"ESP Purple",
+"ESP Yellow"
+},
+Callback = function(Value)
+getgenv().SelectedESP = Value
+end
 })
+
+tab2:AddDropdown({
+Title = "Mode ESP",
+Options = {
+"ESP Full",
+"ESP Body",
+"ESP Name"
+},
+Callback = function(Value)
+getgenv().ESPMode = Value
+-- Atualiza o ESP quando o modo é alterado
+if getgenv().ESPEnabled and getgenv().SelectedESP then
+-- Destrói ESPs existentes para recriar com o novo modo
+for _,plr in pairs(game.Players:GetPlayers()) do
+if plr.Character then
+for _,espName in pairs({
+"RED_ESP",
+"GREEN_ESP",
+"PURPLE_ESP",
+"YELLOW_ESP"
+}) do
+local esp = plr.Character:FindFirstChild(espName)
+if esp then esp:Destroy() end
+local head = plr.Character:FindFirstChild("Head")
+if head then
+local gui = head:FindFirstChild(espName)
+if gui then gui:Destroy() end
+end
+end
+end
+end
+-- Reativa o ESP com o novo modo
+local toggleCallback = tab2:GetToggle("Activate ESP").Callback
+toggleCallback(true)
+end
+end
+})
+
+tab2:AddToggle({
+Title = "Activate ESP",
+Callback = function(v)
+
+getgenv().ESPEnabled = v
+
+getgenv().RedESP = false    
+getgenv().GreenESP = false    
+getgenv().PurpleESP = false    
+getgenv().YellowESP = false    
+
+for _,plr in pairs(game.Players:GetPlayers()) do    
+    if plr.Character then    
+        for _,espName in pairs({    
+            "RED_ESP",    
+            "GREEN_ESP",    
+            "PURPLE_ESP",    
+            "YELLOW_ESP"    
+        }) do    
+
+            local esp = plr.Character:FindFirstChild(espName)    
+            if esp then    
+                esp:Destroy()    
+            end    
+
+            local head = plr.Character:FindFirstChild("Head")    
+            if head then    
+                local gui = head:FindFirstChild(espName)    
+                if gui then    
+                    gui:Destroy()    
+                end    
+            end    
+        end    
+    end    
+end    
+
+if not v then    
+    return    
+end    
+
+if not getgenv().SelectedESP then    
+    return    
+end    
+
+if getgenv().SelectedESP == "ESP Red" then    
+
+    getgenv().RedESP = true    
+
+    task.spawn(function()    
+        while getgenv().RedESP and getgenv().ESPEnabled do    
+            for _,v in pairs(game.Players:GetPlayers()) do    
+                if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("RED_ESP") then    
+
+                    local hl = Instance.new("Highlight")    
+                    hl.Name = "RED_ESP"    
+                    hl.FillTransparency = 1    
+                    hl.OutlineColor = Color3.fromRGB(255,0,0)    
+                    hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop    
+                    hl.Parent = v.Character    
+                    -- Controla se o corpo é exibido  
+                    if getgenv().ESPMode == "ESP Name" then  
+                        hl.Enabled = false  
+                    end  
+
+                    local head = v.Character:FindFirstChild("Head")    
+                    if head then    
+                        local gui = Instance.new("BillboardGui")    
+                        gui.Name = "RED_ESP"    
+                        gui.Size = UDim2.new(0,200,0,50)    
+                        gui.AlwaysOnTop = true    
+                        gui.StudsOffset = Vector3.new(0,3,0)    
+                        gui.Parent = head    
+                        -- Controla se o nome é exibido  
+                        if getgenv().ESPMode == "ESP Body" then  
+                            gui.Enabled = false  
+                        end  
+
+                        local txt = Instance.new("TextLabel")    
+                        txt.Size = UDim2.new(1,0,1,0)    
+                        txt.BackgroundTransparency = 1    
+                        txt.TextColor3 = Color3.fromRGB(255,0,0)    
+                        txt.TextStrokeTransparency = 0    
+                        txt.TextScaled = true    
+                        txt.Parent = gui    
+
+                        task.spawn(function()    
+                            while gui.Parent and getgenv().RedESP and getgenv().ESPEnabled do    
+                                local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")    
+                                local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")    
+
+                                if lp and hrp then    
+                                    txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"    
+                                end    
+
+                                task.wait()    
+                            end    
+                        end)    
+                    end    
+                end    
+            end    
+            task.wait(1)    
+        end    
+    end)    
+
+elseif getgenv().SelectedESP == "ESP Green" then    
+
+    getgenv().GreenESP = true    
+
+    task.spawn(function()    
+        while getgenv().GreenESP and getgenv().ESPEnabled do    
+            for _,v in pairs(game.Players:GetPlayers()) do    
+                if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("GREEN_ESP") then    
+
+                    local hl = Instance.new("Highlight")    
+                    hl.Name = "GREEN_ESP"    
+                    hl.FillTransparency = 1    
+                    hl.OutlineColor = Color3.fromRGB(0,255,0)    
+                    hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop    
+                    hl.Parent = v.Character    
+                    if getgenv().ESPMode == "ESP Name" then  
+                        hl.Enabled = false  
+                    end  
+
+                    local head = v.Character:FindFirstChild("Head")    
+                    if head then    
+                        local gui = Instance.new("BillboardGui")    
+                        gui.Name = "GREEN_ESP"    
+                        gui.Size = UDim2.new(0,200,0,50)    
+                        gui.AlwaysOnTop = true    
+                        gui.StudsOffset = Vector3.new(0,3,0)    
+                        gui.Parent = head    
+                        if getgenv().ESPMode == "ESP Body" then  
+                            gui.Enabled = false  
+                        end  
+
+                        local txt = Instance.new("TextLabel")    
+                        txt.Size = UDim2.new(1,0,1,0)    
+                        txt.BackgroundTransparency = 1    
+                        txt.TextColor3 = Color3.fromRGB(0,255,0)    
+                        txt.TextStrokeTransparency = 0    
+                        txt.TextScaled = true    
+                        txt.Parent = gui    
+
+                        task.spawn(function()    
+                            while gui.Parent and getgenv().GreenESP and getgenv().ESPEnabled do    
+                                local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")    
+                                local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")    
+
+                                if lp and hrp then    
+                                    txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"    
+                                end    
+
+                                task.wait()    
+                            end    
+                        end)    
+                    end    
+                end    
+            end    
+            task.wait(1)    
+        end    
+    end)    
+
+elseif getgenv().SelectedESP == "ESP Purple" then
+
+getgenv().PurpleESP = true
+
+task.spawn(function()
+while getgenv().PurpleESP and getgenv().ESPEnabled do
+for _,v in pairs(game.Players:GetPlayers()) do
+if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("PURPLE_ESP") then
+
+local hl = Instance.new("Highlight")    
+            hl.Name = "PURPLE_ESP"    
+            hl.FillTransparency = 1    
+            hl.OutlineColor = Color3.fromRGB(170,0,255)    
+            hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop    
+            hl.Parent = v.Character    
+            if getgenv().ESPMode == "ESP Name" then  
+                hl.Enabled = false  
+            end  
+
+            local head = v.Character:FindFirstChild("Head")    
+            if head then    
+                local gui = Instance.new("BillboardGui")    
+                gui.Name = "PURPLE_ESP"    
+                gui.Size = UDim2.new(0,200,0,50)    
+                gui.AlwaysOnTop = true    
+                gui.StudsOffset = Vector3.new(0,3,0)    
+                gui.Parent = head    
+                if getgenv().ESPMode == "ESP Body" then  
+                    gui.Enabled = false  
+                end  
+
+                local txt = Instance.new("TextLabel")    
+                txt.Size = UDim2.new(1,0,1,0)    
+                txt.BackgroundTransparency = 1    
+                txt.TextColor3 = Color3.fromRGB(170,0,255)    
+                txt.TextStrokeTransparency = 0    
+                txt.TextScaled = true    
+                txt.Parent = gui    
+
+                task.spawn(function()    
+                    while gui.Parent and getgenv().PurpleESP and getgenv().ESPEnabled do    
+                        local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")    
+                        local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")    
+
+                        if lp and hrp then    
+                            txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"    
+                        end    
+
+                        task.wait()    
+                    end    
+                end)    
+            end    
+        end    
+    end    
+    task.wait(1)    
+end
+
+end)
+elseif getgenv().SelectedESP == "ESP Yellow" then
+
+getgenv().YellowESP = true
+
+task.spawn(function()
+while getgenv().YellowESP and getgenv().ESPEnabled do
+for _,v in pairs(game.Players:GetPlayers()) do
+if v ~= game.Players.LocalPlayer and v.Character and not v.Character:FindFirstChild("YELLOW_ESP") then
+
+local hl = Instance.new("Highlight")    
+            hl.Name = "YELLOW_ESP"    
+            hl.FillTransparency = 1    
+            hl.OutlineColor = Color3.fromRGB(255,255,0)    
+            hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop    
+            hl.Parent = v.Character    
+            if getgenv().ESPMode == "ESP Name" then  
+                hl.Enabled = false  
+            end  
+
+            local head = v.Character:FindFirstChild("Head")    
+            if head then    
+                local gui = Instance.new("BillboardGui")    
+                gui.Name = "YELLOW_ESP"    
+                gui.Size = UDim2.new(0,200,0,50)    
+                gui.AlwaysOnTop = true    
+                gui.StudsOffset = Vector3.new(0,3,0)    
+                gui.Parent = head    
+                if getgenv().ESPMode == "ESP Body" then  
+                    gui.Enabled = false  
+                end  
+
+                local txt = Instance.new("TextLabel")    
+                txt.Size = UDim2.new(1,0,1,0)    
+                txt.BackgroundTransparency = 1    
+                txt.TextColor3 = Color3.fromRGB(255,255,0)    
+                txt.TextStrokeTransparency = 0    
+                txt.TextScaled = true    
+                txt.Parent = gui    
+
+                task.spawn(function()    
+                    while gui.Parent and getgenv().YellowESP and getgenv().ESPEnabled do    
+                        local lp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")    
+                        local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")    
+
+                        if lp and hrp then    
+                            txt.Text = v.Name.." | "..math.floor((lp.Position-hrp.Position).Magnitude).."m"    
+                        end    
+
+                        task.wait()    
+                    end    
+                end)    
+            end    
+        end    
+    end    
+    task.wait(1)    
+end
+
+end)
+end
+end
+
+})
+
 local Tab = Window:MakeTab({"Skin", "rbxassetid://10734952036"})
 
 -- ========================================================================
