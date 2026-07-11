@@ -4707,6 +4707,12 @@ Callback = function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-HironDrigon-v2-111282"))()
 end
 })
+tabscripts:AddButton({
+Name = "Fe emote",
+Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/7yd7/Hub/refs/heads/Branch/GUIS/Emotes.lua"))()
+end
+})
 
 
 local Tabcasa = Window:MakeTab({"Home ", "home"})
