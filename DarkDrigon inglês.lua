@@ -4343,7 +4343,10 @@ Troll:AddButton({
 local TabNuke = Window:MakeTab({"Troll Map", "Map"})
 
 TabNuke:AddSection({"Nuke"})
-
+TabNuke:AddParagraph({
+	"NOTICE 📢",
+	"Before activating the options below, you must reset your skin; otherwise, you will keep dying infinitely."
+	})
 local skyboxEnabled = false
 local skyboxTrack = nil
 local rigidTrack = nil
@@ -5191,119 +5194,9 @@ local function getDelay(speed)
     speed = math.clamp(speed, 1, 60)
     return 0.02 + (60 - speed) * 0.003
 end
-
--- ================= RP NAME =================
-
-RGBTab:AddTextBox({
-    Name = "RP Name Text",
-    Placeholder = "Digite o RP Name",
-    Callback = function(v)
-        RPNameText = v
-    end
-})
-
-RGBTab:AddSlider({
-    Name = "Speed RP Name",
-    Min = 1,
-    Max = 60,
-    Default = 30,
-    Callback = function(v)
-        NameSpeed = v
-    end
-})
-
-RGBTab:AddToggle({
-    Name = "RP Name ON / OFF",
-    Default = false,
-    Callback = function(state)
-        RPNameEnabled = state
-        if not state or RPNameText == "" then return end
-
-        task.spawn(function()
-            while RPNameEnabled do
-                -- ESCREVER
-                for i = 1, #RPNameText do
-                    if not RPNameEnabled then return end
-                    RPTextRemote:FireServer(
-                        "RolePlayName",
-                        string.sub(RPNameText, 1, i)
-                    )
-                    task.wait(getDelay(NameSpeed))
-                end
-
-                task.wait(0.4)
-
-                -- APAGAR (DE TRÃS PRA FRENTE)
-                for i = #RPNameText - 1, 0, -1 do
-                    if not RPNameEnabled then return end
-                    RPTextRemote:FireServer(
-                        "RolePlayName",
-                        string.sub(RPNameText, 1, i)
-                    )
-                    task.wait(getDelay(NameSpeed))
-                end
-
-                task.wait(0.4)
-            end
-        end)
-    end
-})
-
--- ================= RP BIO =================
-
-RGBTab:AddTextBox({
-    Name = "RP Bio Text",
-    Placeholder = "Digite o RP Bio",
-    Callback = function(v)
-        RPBioText = v
-    end
-})
-
-RGBTab:AddSlider({
-    Name = "Speed RP Bio",
-    Min = 1,
-    Max = 60,
-    Default = 30,
-    Callback = function(v)
-        BioSpeed = v
-    end
-})
-
-RGBTab:AddToggle({
-    Name = "RP Bio ON / OFF",
-    Default = false,
-    Callback = function(state)
-        RPBioEnabled = state
-        if not state or RPBioText == "" then return end
-
-        task.spawn(function()
-            while RPBioEnabled do
-                -- ESCREVER
-                for i = 1, #RPBioText do
-                    if not RPBioEnabled then return end
-                    RPTextRemote:FireServer(
-                        "RolePlayBio",
-                        string.sub(RPBioText, 1, i)
-                    )
-                    task.wait(getDelay(BioSpeed))
-                end
-
-                task.wait(0.4)
-
-                -- APAGAR
-                for i = #RPBioText - 1, 0, -1 do
-                    if not RPBioEnabled then return end
-                    RPTextRemote:FireServer(
-                        "RolePlayBio",
-                        string.sub(RPBioText, 1, i)
-                    )
-                    task.wait(getDelay(BioSpeed))
-                end
-
-                task.wait(0.4)
-            end
-        end)
-    end
+RGBTab:AddParagraph({
+	"NOTICE 📢",
+	"The options below were patched, so it was necessary to remove them."
 })
 local ToolsTab = Window:MakeTab({"Items  ", "backpack"})
 
